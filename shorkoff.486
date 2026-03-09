@@ -1,0 +1,42 @@
+#!/bin/sh
+
+######################################################
+##             SHORK UTILITY - SHORKOFF             ##
+######################################################
+## A utility for SHORK 486 that safely brings the   ##
+## system to a halt before powering off             ##
+######################################################
+## Licence: GNU GENERAL PUBLIC LICENSE Version 3    ##
+######################################################
+## Kali (sharktastica.co.uk)                        ##
+######################################################
+
+
+
+. "$(dirname -- "$0")/shorkcommon.sh"
+
+cd /
+clear
+get_term_size
+
+BANNER=""
+if [ "$TERM_WIDTH" -ge 128 ] && [ -f banners/goodbye-128 ]; then
+    BANNER="banners/goodbye-128"
+elif [ "$TERM_WIDTH" -ge 100 ] && [ -f banners/goodbye-100 ]; then
+    BANNER="banners/goodbye-100"
+elif [ "$TERM_WIDTH" -ge 80 ] && [ -f banners/goodbye-80 ]; then
+    BANNER="banners/goodbye-80"
+fi
+
+if [ -n "$BANNER" ]; then
+    printf "\033[38;5;208m"
+    cat "$BANNER"
+    printf "\033[0m"
+else
+    printf "\033[38;5;208mSHORK 486 is now halted! It is safe to turn off your computer.\033[0m\n"
+fi
+
+sync
+sync
+mount -o remount,ro /
+halt -f
