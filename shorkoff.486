@@ -13,7 +13,7 @@
 
 
 
-. "$(dirname -- "$0")/shorkcommon.sh"
+. "/usr/bin/shorkcommon.sh"
 
 cd /
 clear
